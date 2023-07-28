@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Results{% endblock title %}
+
+{% block content %}
+<body>
+    {% if results %}
+        {% for recipe in results %}
+            <div class="card" style="width: 18rem; height: 15rem;">
+                <a href="#">
+                <img src="{{ recipe.image_url }}" class="card-img-top cardImage" alt="{{ recipe.title }} image" style="height: 11rem;">
+                <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                
+                </div>
+            </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>No Results Found.</h3>
+    {% endif %}
+</body>
+
+{% endblock content %}
