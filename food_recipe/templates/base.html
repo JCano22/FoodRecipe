@@ -33,7 +33,11 @@
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" 
-                        href="#">Log Out</a>
+                        href="{% url 'password_change' %}">Change Password</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" 
+                        href="{% url 'logout' %}">Log Out</a>
                       </li>
                       
                     </ul>
@@ -41,11 +45,11 @@
                   {% else %}
                   <li class="nav-item liRight2">
                     <a class="nav-link" 
-                    href="#">Sign Up</a>
+                    href="{% url 'signup' %}">Sign Up</a>
                   </li>
                   <li class="nav-item liRight3">
                     <a class="nav-link" 
-                    href="#">Log In</a>
+                    href="{% url 'login' %}">Log In</a>
                   </li>
                 
                 {% endif %}
