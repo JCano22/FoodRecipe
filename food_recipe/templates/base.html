@@ -11,19 +11,19 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Home</a>
+          <a class="navbar-brand" href="{% url 'home' %}">Home</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 {% if user.is_authenticated %}
-                <li class="nav-item dropdown liRight1">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Welcome, <span style="font-weight: bold;">{{ user }}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link" 
                             href="#">Saved Recipes</a>
                           </li>
@@ -41,7 +41,8 @@
                       </li>
                       
                     </ul>
-                  </li>
+                </li>
+                  
                   {% else %}
                   <li class="nav-item liRight2">
                     <a class="nav-link" 
@@ -51,6 +52,8 @@
                     <a class="nav-link" 
                     href="{% url 'login' %}">Log In</a>
                   </li>
+
+                  
                 
                 {% endif %}
 

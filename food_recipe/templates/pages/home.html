@@ -5,7 +5,16 @@
 {% block content %}
 <div class="homeCont">
     <h1 class="pageTitle">Welcome!</h1>
-    <h2>Search form over 2million+ recipes!</h2>
+    <h2>Search from over 2million+ recipes!</h2>
+
+    <form method="post" action="{% url 'results' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input placeholder="Enter Recipe Search" type="text" class="form-control" name="search_query" id="search_query" required>
+            <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value="Search">
+        </div>
+    </form>
+    
 </div>
 
 {% endblock content %}
