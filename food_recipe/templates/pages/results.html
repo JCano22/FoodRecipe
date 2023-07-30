@@ -7,7 +7,7 @@
     {% if results %}
         {% for recipe in results %}
             <div class="card" style="width: 18rem; height: 15rem;">
-                <a href="#">
+                <a href="{% url 'details' recipe.id %}">
                 <img src="{{ recipe.image_url }}" class="card-img-top cardImage" alt="{{ recipe.title }} image" style="height: 11rem;">
                 <div class="card-body">
                 <h5 class="card-title">{{ recipe.title }}</h5>
