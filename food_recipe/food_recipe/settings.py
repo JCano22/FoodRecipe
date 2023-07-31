@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'recipes',
     'accounts',
     'pages',
+    'saved_recipes',
 
 ]
 
@@ -130,6 +131,8 @@ STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = "home"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
