@@ -11,9 +11,11 @@
                 <img src="{{ recipe.image_url }}" class="card-img-top cardImage" alt="{{ recipe.title }} image" style="height: 11rem;">
                 <div class="card-body">
                 <h5 class="card-title">{{ recipe.title }}</h5>
-                <a href="{% url 'save_recipe' recipe.id %}">
-                    <i class="fa fa-heart"></i>
-                </a>
+                <form action="POST">
+                    <a href="{% url 'save_recipe' recipe.id %}">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </form>
                 
                 </div>
             </a>

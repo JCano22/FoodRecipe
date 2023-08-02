@@ -1,0 +1,15 @@
+:root{
+    --orange: #cc5500;
+    --white: #FFF6F4;
+}
+*{
+    font-family: 'Playfair Display', serif;
+    background-color: var(--white);
+    padding: 0;
+    margin: 0;
+}
+
+/*Navbar*/
+.navbar-expand-lg .navbar-collapse{
+    justify-content: flex-end;
+}
