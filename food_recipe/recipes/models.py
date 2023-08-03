@@ -8,7 +8,7 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     instructions = models.URLField()
     image_url = models.URLField()
-    calories = models.DecimalField(max_digits=6, decimal_places=2)
+    calories = models.IntegerField()
     cuisine = models.TextField()
 
     def __str__(self):

@@ -3,9 +3,11 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+<div class="homeDiv">
 <div class="homeCont">
+    
     <h1 class="pageTitle">Welcome!</h1>
-    <h2>Search from over 2million+ recipes!</h2>
+    <h2>Search from over 2 million+ recipes!</h2>
 
     <form method="post" action="{% url 'results' %}">
         {% csrf_token %}
@@ -15,6 +17,7 @@
         </div>
     </form>
     
+</div>
 </div>
 
 {% endblock content %}

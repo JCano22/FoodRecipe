@@ -4,12 +4,79 @@
 }
 *{
     font-family: 'Playfair Display', serif;
-    background-color: var(--white);
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: var(--white);
+   
 }
 
 /*Navbar*/
+nav{
+    padding: 0 !important;
+    height: 3rem;
+    
+}
 .navbar-expand-lg .navbar-collapse{
     justify-content: flex-end;
+}
+.navColor{
+    background-color: var(--orange);
+    padding: 4px;
+    color: var(--white);
+}
+.nav-item{
+    color: var(--white) !important;
+}
+
+
+/*Home*/
+.homeDiv{
+    background-image: url('/static/media/wallpaperflare.com_wallpaper.jpg'); 
+    background-size:cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+@media (max-width: 840px){
+    .homeCont{
+        width: 90% !important;
+        text-align: center;
+        height: 100%;
+
+    }
+    .pageTitle{
+        font-size: 2rem;
+        margin: 5px;
+    }
+    .homeCont h2{
+        font-size: 1.4rem;
+    }
+}
+.homeCont{
+    width: 70%;
+    height: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    
+}
+.pageTitle{
+    font-size: 6rem;
+    font-weight: 700;
+    text-shadow: 1px 1px grey;
+    margin: 10px;
+}
+.homeCont .input-group{
+    margin: 10px;
+    width: 55vw;
+}
+.homeCont .input-group input{
+    margin-right: 5px;
+}
+.homeCont .input-group input .btn{
+    background-color: var(--orange);
 }

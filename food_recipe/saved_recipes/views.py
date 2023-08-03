@@ -21,7 +21,11 @@ class SavedRecipeListView(LoginRequiredMixin, ListView):
         saved_recipes = context['saved_recipes']
         for saved_recipe in saved_recipes:
             recipe = saved_recipe.recipe
-            recipe.ingredients_list = recipe.ingredients.split('\n')
+            if recipe is not None and recipe.ingredients:
+                recipe.ingredients_list = recipe.ingredients.split('\n')
+            else:
+                recipe.ingredients_list = []
+
         return context
 
 
