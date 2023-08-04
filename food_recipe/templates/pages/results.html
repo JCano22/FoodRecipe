@@ -5,8 +5,9 @@
 {% block content %}
 <body>
     {% if results %}
+        <div class="resultCont">
         {% for recipe in results %}
-            <div class="card" style="width: 18rem; height: 15rem;">
+            <div class="card" style="width: 18rem; height: 16rem;">
                 <a href="{% url 'details' recipe.id %}">
                 <img src="{{ recipe.image_url }}" class="card-img-top cardImage" alt="{{ recipe.title }} image" style="height: 11rem;">
                 <div class="card-body">
@@ -21,6 +22,7 @@
             </a>
             </div>
         {% endfor %}
+    </div>
     {% else %}
         <h3>No Results Found.</h3>
     {% endif %}
