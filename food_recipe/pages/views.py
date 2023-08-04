@@ -13,11 +13,12 @@ class HomePageView(TemplateView):
 
 def search_recipes(request):
     if request.method == 'POST':
+        print(request.POST)
         search_query = request.POST.get('search_query', '')
-        Recipe.objects.all().delete()
+        print("search_query:", search_query)
+        # Recipe.objects.all().delete()
 
         search_results = fetch_and_save_recipe(search_query)
-
         return render(request, 'pages/results.html', {'results': search_results})
     return render(request, 'home.html')
 

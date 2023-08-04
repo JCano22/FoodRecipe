@@ -10,16 +10,36 @@ from recipes.models import Recipe
 
 class SavedRecipeListView(LoginRequiredMixin, ListView):
     model = SavedRecipe
-    template_name = 'saved_recipes/saved_list.html'
+    template_name = 'saved_recipes/saved_recipe_list.html'
     context_object_name = 'saved_recipes'
 
     def get_queryset(self):
         return SavedRecipe.objects.filter(user=self.request.user)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        saved_recipes = context['saved_recipes']
+        for saved_recipe in saved_recipes:
+            recipe = saved_recipe.recipe
+            if recipe is not None and recipe.ingredients:
+                recipe.ingredients_list = recipe.ingredients.split('\n')
+            else:
+                recipe.ingredients_list = []
+
+        return context
+
 
 class SaveRecipeView(LoginRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         recipe_id = kwargs['recipe_id']
-        recipe = Recipe.objects.get(id=recipe_id)
-        SavedRecipe.objects.create(user=request.user, recipe=recipe)
-        return redirect('saved_recipe_list')
+        try:
+            recipe = Recipe.objects.get(id=recipe_id)
+
+            print(recipe)
+            recipe_clicked = SavedRecipe.objects.create(
+                user=request.user, recipe=recipe)
+            recipe_clicked.save()
+
+            return redirect('saved_recipe_list')
+        except Recipe.DoesNotExist:
+            return redirect('home')

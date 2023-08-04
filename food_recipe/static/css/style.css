@@ -1,0 +1,117 @@
+:root{
+    --orange: #cc5500;
+    --white: #FFF6F4;
+}
+*{
+    font-family: 'Playfair Display', serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: var(--white); 
+}
+
+/*Navbar*/
+nav{
+    color:var(--white);
+    background-color: var(--orange);
+}
+.navbar{
+    padding: 0;
+    height: 3rem;
+    background-color: var(--orange);
+}
+.navbar-brand{
+    font-size: 1.7rem;
+    font-weight: 700;
+    padding-left: 5%;
+}
+.navbar-expand-lg .navbar-collapse{
+    justify-content: flex-end;
+}
+.navUser {
+    padding-right: 5%;
+
+}
+.navUser .user{
+    font-size: 1.2rem;
+}
+.navColor{
+    background-color: var(--orange);
+    color: var(--white);
+   
+}
+.dropdown-menu .nav-link:hover{
+    font-weight: bold;
+}
+.nav-link{
+    color: var(--white);
+}
+
+
+/*Home*/
+.homeDiv{
+    background-image: url('/static/media/wallpaperflare.com_wallpaper.jpg'); 
+    background-size:cover;
+    background-repeat: no-repeat;
+    height: 60vh;
+}
+@media (max-width: 840px){
+    .homeCont{
+        width: 90% !important;
+        text-align: center;
+        height: 100%;
+
+    }
+    .pageTitle{
+        font-size: 2rem;
+        margin: 5px;
+    }
+    .homeCont h2{
+        font-size: 1.4rem;
+    }
+}
+.homeCont{
+    width: 70%;
+    height: 50%;
+    margin: auto;
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    
+}
+.pageTitle{
+    font-size: 6rem;
+    font-weight: 700;
+    text-shadow: 1px 1px grey;
+    margin: 10px;
+}
+.homeCont .input-group{
+    margin: 10px;
+    width: 55vw;
+}
+.homeCont .input-group input{
+    margin-right: 5px;
+}
+.homeCont .btn{
+    background-color: var(--orange);
+    color: var(--white);
+}
+.homeCont .btn:hover{
+    background-color: #e4792d;
+    color: black;
+}
+
+/*Results*/
+.resultCont{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-self: center;
+    margin-top: 10px;
+}
