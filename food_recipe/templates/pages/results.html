@@ -7,19 +7,22 @@
     {% if results %}
         <div class="resultCont">
         {% for recipe in results %}
-            <div class="card" style="width: 18rem; height: 16rem;">
-                <a href="{% url 'details' recipe.id %}">
+            <div class="card">
+                <a class="cardA" href="{% url 'details' recipe.id %}">
+                    
                 <img src="{{ recipe.image_url }}" class="card-img-top cardImage" alt="{{ recipe.title }} image" style="height: 11rem;">
-                <div class="card-body">
-                <h5 class="card-title">{{ recipe.title }}</h5>
-                <form action="POST">
-                    <a href="{% url 'save_recipe' recipe.id %}">
-                        <i class="fa fa-heart"></i>
+                </a>
+                <form class="heartForm" action="POST">
+                    <a class="heartA" href="{% url 'save_recipe' recipe.id %}">
+                        <div class="iDiv">
+                            <i class="fa fa-heart"></i>
+                        </div>
                     </a>
                 </form>
-                
+                <div class="card-body">
+                    <h5 class="card-title">{{ recipe.title }}</h5>
                 </div>
-            </a>
+            
             </div>
         {% endfor %}
     </div>

@@ -7,6 +7,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    letter-spacing: 1.8px;
 }
 body{
     background-color: var(--white); 
@@ -24,7 +25,7 @@ nav{
 }
 .navbar-brand{
     font-size: 1.7rem;
-    font-weight: 700;
+    font-weight: 600;
     padding-left: 5%;
 }
 .navbar-expand-lg .navbar-collapse{
@@ -42,8 +43,8 @@ nav{
     color: var(--white);
    
 }
-.dropdown-menu .nav-link:hover{
-    font-weight: bold;
+.dropdown-menu a:hover{
+    font-weight: 700;
 }
 .nav-link{
     color: var(--white);
@@ -62,14 +63,16 @@ nav{
         width: 90% !important;
         text-align: center;
         height: 100%;
+        
 
     }
-    .pageTitle{
-        font-size: 2rem;
+    .homeCont .pageTitle{
+        font-size: 4rem;
         margin: 5px;
     }
     .homeCont h2{
         font-size: 1.4rem;
+
     }
 }
 .homeCont{
@@ -84,7 +87,7 @@ nav{
     
 }
 .pageTitle{
-    font-size: 6rem;
+    font-size: 5rem;
     font-weight: 700;
     text-shadow: 1px 1px grey;
     margin: 10px;
@@ -115,3 +118,91 @@ nav{
     align-self: center;
     margin-top: 10px;
 }
+.resultCont .card{
+    width: 17rem;
+    height: 16rem;
+    margin: 10px;
+    position: relative;
+    box-shadow: 1px 2px black;
+}
+.card .cardA{
+    min-height: 11rem;
+}
+.card .cardImage{
+    object-fit:cover;
+}
+.card .card-body{
+    background-color: #eaeaea;
+    text-align: center;
+    padding: 10px;
+    max-height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.card-body h5{
+    color: var(--black);
+    text-decoration: none;
+}
+.heartForm{
+    position: absolute;
+    left: 88%;
+    top: -20px;
+    
+}
+.heartA{
+    
+    display:inline;
+    margin: -10px;
+    text-decoration: none;
+}
+
+.heartA .iDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    background-color: var(--orange);
+}
+.heartA i{
+    color:var(--white);
+    text-shadow: 1px 1px black;
+}
+.card .cardTitle{
+    margin: 5px;
+
+}
+
+/*Login*/
+.container{
+    width: 45%;
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container .loginTitle{
+    text-align: center;
+}
+.container .row{
+    width: 100%;
+    margin: auto;
+}
+.container .col-md-6{
+    margin: auto;
+}
+form .loginBtn{
+    margin: auto;
+    background-color: var(--orange);
+}
+form .loginBtn:hover{
+    background-color: #e4792d;
+    color: black;
+}
+
+
+/*Saved Recipes*/
