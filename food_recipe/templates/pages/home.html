@@ -19,5 +19,13 @@
     
 </div>
 </div>
+<div class="randomDiv">
+    <h2 class="randomTitle">Recommendations:</h2>
+    {% for recipe in recipes_to_display %}
+        <div class="randomCard">
+            <h3>{{ recipe.title }}</h3>
+        </div>
+    {% endfor %}
+</div>
 
 {% endblock content %}

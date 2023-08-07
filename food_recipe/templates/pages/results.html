@@ -3,7 +3,8 @@
 {% block title %}Results{% endblock title %}
 
 {% block content %}
-<body>
+<body class="resultBody">
+    <h3 style="margin: 2% 0 2% 10%;" class="resultTitle">Search Results For: <span style="font-weight: bold">{{ search_query }}</span> </h3>
     {% if results %}
         <div class="resultCont">
         {% for recipe in results %}
