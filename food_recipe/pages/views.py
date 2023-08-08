@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from recipes.views import fetch_and_save_recipe
 from recipes.models import Recipe
+from saved_recipes.models import SavedRecipe
 import requests
 import random
 
@@ -13,11 +14,9 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         cuisines = [
-            'American', 'Chinese', 'Indian', 'Italian', 'Mexican', 'Mediterranean'
+            'American', 'Chinese', 'Indian', 'Italian', 'Mexican', 'Mediterranean', 'French', 'Asian'
         ]
-
         recipes_to_display = []
-
         for cuisine in cuisines:
             # Make API request to Edamam to get random recipes for the selected cuisine
             api_endpoint = 'https://api.edamam.com/api/recipes/v2'
@@ -29,25 +28,28 @@ class HomePageView(TemplateView):
                 'app_id': app_id,
                 'app_key': app_key,
                 'cuisineType': cuisine,
-
             }
             try:
                 response = requests.get(api_endpoint, params=params)
                 response.raise_for_status()
+                data = response.json()
+                hits = data.get('hits', [])
 
-                if response.status_code == 200:
-                    data = response.json()
-                    hits = data.get('hits', [])
+                if hits:
+                    random_recipe = random.choice(hits)['recipe']
 
-                    if hits:
-                        random_recipe = random.choice(hits)['recipe']
-                        recipes_to_display.append({
-                            'cuisine': cuisine,
-                            'title': random_recipe['label'],
-                            'ingredients': ', '.join(random_recipe['ingredientLines']),
-                            'instructions': random_recipe['url'],
-                            'image_url': random_recipe['image'],
-                        })
+                    recipe_instance = Recipe(
+                        title=random_recipe['label'],
+                        ingredients='\n'.join(
+                            random_recipe['ingredientLines']),
+                        instructions=random_recipe['url'],
+                        image_url=random_recipe['image'],
+                        calories=random_recipe['calories'],
+                        cuisine=cuisine,
+                    )
+
+                    recipes_to_display.append(recipe_instance)
+                    recipe_instance.save()
             except requests.exceptions.RequestException as e:
                 # Handle any errors that occur during the API request
                 print(f"Error fetching recipes: {e}")
@@ -63,6 +65,11 @@ def search_recipes(request):
     if request.method == 'POST':
         search_query = request.POST.get('search_query', '')
         # Recipe.objects.all().delete()
+        saved_recipe_ids = SavedRecipe.objects.values_list(
+            'recipe_id', flat=True)
+
+        # Delete recipes that are not saved by any user
+        Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
         search_results = fetch_and_save_recipe(search_query)
         return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query})

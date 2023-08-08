@@ -25,6 +25,10 @@
                             </ul>
                             <h5>Instructions:</h5>
                             <a href="{{ saved_recipe.recipe.instructions }}" target="_blank">{{ saved_recipe.recipe.instructions }}</a>
+                            <form method="post" action="{% url 'delete' saved_recipe.pk %}">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                              </form>
                         </div>
                     </div>
                 </li>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}Home{% endblock title %}
-
+{% load static %}
 {% block content %}
 <div class="homeDiv">
 <div class="homeCont">
@@ -19,13 +19,51 @@
     
 </div>
 </div>
-<div class="randomDiv">
+<div style="width: 60%; margin: auto;" class="randomDiv">
     <h2 class="randomTitle">Recommendations:</h2>
-    {% for recipe in recipes_to_display %}
-        <div class="randomCard">
-            <h3>{{ recipe.title }}</h3>
+
+    <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for recipe in recipes_to_display %}
+                {% if forloop.counter0|divisibleby:2 %}
+                    {% if forloop.counter0 == 0 %}
+                        <div class="carousel-item active">
+                            <div class="row">
+                    {% else %}
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+                    {% endif %}
+                {% endif %}
+                <div class="col-md-6">
+                    <div class="card">
+                        <a class="cardA" href="{% url 'details' recipe.id %}">
+                    
+                            <img src="{{ recipe.image_url }}" class="card-img-top cardImage" alt="{{ recipe.title }} image" style="height: 11rem;">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">{{ recipe.title }}</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% if forloop.counter0|add:1 == forloop.last or forloop.last %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-    {% endfor %}
+        <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 </div>
+
 
 {% endblock content %}
