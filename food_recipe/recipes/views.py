@@ -27,15 +27,28 @@ def fetch_and_save_recipe(search_query):
 
         for recipe_info in recipe_data['hits']:
             recipe = recipe_info['recipe']
-            new_recipe = Recipe(
-                title=recipe['label'],
-                ingredients='\n'.join(recipe['ingredientLines']),
-                instructions=recipe['url'],
-                image_url=recipe['images']['REGULAR']['url'],
-                calories=recipe['calories'],
-                cuisine=recipe['cuisineType'],
-            )
-            recipes_to_save.append(new_recipe)
+            recipeImg = recipe['images']['REGULAR']['url']
+
+            if recipeImg:
+                new_recipe = Recipe(
+                    title=recipe['label'],
+                    ingredients='\n'.join(recipe['ingredientLines']),
+                    instructions=recipe['url'],
+                    image_url=recipe['images']['REGULAR']['url'],
+                    calories=recipe['calories'],
+                    cuisine=recipe['cuisineType'],
+                )
+                recipes_to_save.append(new_recipe)
+            else:
+                new_recipe = Recipe(
+                    title=recipe['label'],
+                    ingredients='\n'.join(recipe['ingredientLines']),
+                    instructions=recipe['url'],
+                    image_url="./static/media/noImage.jpg",
+                    calories=recipe['calories'],
+                    cuisine=recipe['cuisineType'],
+                )
+                recipes_to_save.append(new_recipe)
 
         # adds recipes_to_save to db all at once
         Recipe.objects.bulk_create(recipes_to_save)

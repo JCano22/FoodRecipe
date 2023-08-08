@@ -107,8 +107,27 @@ nav{
     background-color: #e4792d;
     color: black;
 }
+.randomCont{
+    height: 22rem;;
+}
+.randomDiv{
+    width: 75%;
+    margin: auto;
+}
+.randomTitle{
+    margin: 20px;
+    font-weight: 600;
+}
+.randomDiv .carousel{
+    margin: 10px;
+}
+.carousel-inner .card-title{
+    text-decoration: none;
+    color: black;
+}
 
 /*Results*/
+
 .resultCont{
     width: 80%;
     margin: auto;
