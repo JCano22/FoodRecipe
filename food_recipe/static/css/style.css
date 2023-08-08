@@ -108,15 +108,19 @@ nav{
     color: black;
 }
 .randomCont{
-    height: 22rem;;
+    height: 22rem;
+    padding: 10px;
 }
 .randomDiv{
     width: 75%;
     margin: auto;
+    padding: 10px;
 }
 .randomTitle{
     margin: 20px;
     font-weight: 600;
+    text-align: 
+    center;
 }
 .randomDiv .carousel{
     margin: 10px;
@@ -225,3 +229,49 @@ form .loginBtn:hover{
 
 
 /*Saved Recipes*/
+.savedCont{
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+    padding: 10px;
+}
+.savedCont .savedCard{
+    width: 100%;
+
+}
+.list-group-item {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px; 
+    box-sizing: border-box;
+}
+.list-group-item .savedCardCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 2rem;
+}
+.savedImgCont{
+    display: flex;
+}
+.col-md-3 .savedImg{
+    margin: auto;
+}
+.savedDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.savedDetails h4{
+    text-align: center;
+}
+.savedDetails .savedInstruct{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+.savedInstruct a{
+    width: 90%;
+}
