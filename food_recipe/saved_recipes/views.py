@@ -48,6 +48,7 @@ class SaveRecipeView(LoginRequiredMixin, View):
 
 
 class DeleteRecipeView(LoginRequiredMixin, DeleteView):
+    
     model = SavedRecipe
 
     template_name = "pages/delete_confirmation.html"

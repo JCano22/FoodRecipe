@@ -5,6 +5,8 @@ from recipes.models import Recipe
 from saved_recipes.models import SavedRecipe
 import requests
 import random
+from django.contrib.auth.decorators import login_required
+# from .forms import EditAccountForm
 
 
 class HomePageView(TemplateView):
