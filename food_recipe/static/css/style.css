@@ -17,6 +17,7 @@ body{
 nav{
     color:var(--white);
     background-color: var(--orange);
+    z-index: 2;
 }
 .navbar{
     padding: 0;
@@ -73,6 +74,15 @@ nav{
     .homeCont h2{
         font-size: 1.4rem;
 
+    }
+    .homeCont form{
+        width: 87%;
+    }
+    .homeCont .searchDiv{
+        margin: auto;
+    }
+    .homeCont .searchInput{
+        width: 67%;
     }
 }
 .homeCont{
@@ -251,10 +261,11 @@ form .loginBtn:hover{
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 2rem;
+    gap: 1rem;
 }
 .savedImgCont{
     display: flex;
+    padding-top: 30px;
 }
 .col-md-3 .savedImg{
     margin: auto;
@@ -266,6 +277,7 @@ form .loginBtn:hover{
 }
 .savedDetails h4{
     text-align: center;
+    font-weight: 600;
 }
 .savedDetails .savedInstruct{
     width: 80%;
