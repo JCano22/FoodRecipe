@@ -6,43 +6,43 @@
 <div class="container savedCont mt-5">
     <h2>Your Saved Recipes</h2>
     {% if saved_recipes %}
-    <p>Total saved recipes: {{ saved_recipes|length }}</p>
-    <div class="savedCard">
-        <ul class="list-group mt-3">
-            {% for saved_recipe in saved_recipes %}
-                <li class="list-group-item">
-                    <div class="row savedCardCont">
-                        <div class="col-md-3 savedImgCont">
-                            <img src="{{ saved_recipe.recipe.image_url }}" alt="{{ saved_recipe.recipe.title }} image" class="img-fluid savedImg">
-                        </div>
-                        <div class="col-md-9">
-                            <div class="savedDetails">
-                                <h4>{{ saved_recipe.recipe.title }}</h4>
-                                <p>Calories: {{ saved_recipe.recipe.calories }}</p>
-                                <p>Cuisine: {{ saved_recipe.recipe.cuisine }}</p>
-                                <h5>Ingredients:</h5>
-                                <ul>
-                                    {% for ingredient in saved_recipe.recipe.ingredients_list %}
-                                        <li>{{ ingredient }}</li>
-                                    {% endfor %}
-                                </ul>
-                                    <br>
-                                <h5>Instructions:</h5>
-                                <div class="savedInstruct">
-                                    <a href="{{ saved_recipe.recipe.instructions }}" target="_blank">{{ saved_recipe.recipe.instructions }}</a>
-                                </div>
+        <p>Total saved recipes: {{ saved_recipes|length }}</p>
+        <div class="savedCard">
+            <ul class="list-group mt-3">
+                {% for saved_recipe in saved_recipes %}
+                    <li class="list-group-item">
+                        <div class="row savedCardCont">
+                            <div class="col-md-3 savedImgCont">
+                                <img src="{{ saved_recipe.recipe.image_url }}" alt="{{ saved_recipe.recipe.title }} image" class="img-fluid savedImg">
                             </div>
-                                <br><br>
-                            <form method="post" action="{% url 'delete' saved_recipe.pk %}">
-                                {% csrf_token %}
-                                <button type="submit">Delete</button>
-                              </form>
+                            <div class="col-md-9">
+                                <div class="savedDetails">
+                                    <h4>{{ saved_recipe.recipe.title }}</h4>
+                                    <p>Calories: {{ saved_recipe.recipe.calories }}</p>
+                                    <p>Cuisine: {{ saved_recipe.recipe.cuisine }}</p>
+                                    <h5>Ingredients:</h5>
+                                    <ul>
+                                        {% for ingredient in saved_recipe.recipe.ingredients_list %}
+                                            <li>{{ ingredient }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                        <br>
+                                    <h5>Instructions:</h5>
+                                    <div class="savedInstruct">
+                                        <a href="{{ saved_recipe.recipe.instructions }}" target="_blank">{{ saved_recipe.recipe.instructions }}</a>
+                                    </div>
+                                </div>
+                                    <br><br>
+                                <form method="post" action="{% url 'delete' saved_recipe.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
         <p>No saved recipes found.</p>
     {% endif %}
