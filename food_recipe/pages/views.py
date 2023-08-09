@@ -2,8 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
 from recipes.views import fetch_and_save_recipe
 from recipes.models import Recipe
+from saved_recipes.models import SavedRecipe
+import requests
+import random
 from django.contrib.auth.decorators import login_required
-#from .forms import EditAccountForm
+# from .forms import EditAccountForm
 
 
 class HomePageView(TemplateView):
