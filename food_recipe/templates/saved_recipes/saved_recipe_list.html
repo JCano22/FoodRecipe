@@ -6,6 +6,7 @@
 <div class="container savedCont mt-5">
     <h2>Your Saved Recipes</h2>
     {% if saved_recipes %}
+    <p>Total saved recipes: {{ saved_recipes|length }}</p>
     <div class="savedCard">
         <ul class="list-group mt-3">
             {% for saved_recipe in saved_recipes %}
