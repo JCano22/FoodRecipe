@@ -243,10 +243,15 @@ form .loginBtn:hover{
     width: 90%;
     margin: auto;
     overflow: hidden;
-    padding: 10px;
+    
+}
+.savedCont h2{
+    font-weight: 600;
+    font-size: 2rem;
 }
 .savedCont .savedCard{
     width: 100%;
+    
 
 }
 .list-group-item {
@@ -254,6 +259,7 @@ form .loginBtn:hover{
     margin: 10px 0;
     padding: 10px; 
     box-sizing: border-box;
+    box-shadow: 1px 2px black;
 }
 .list-group-item .savedCardCont{
     display: flex;
@@ -262,6 +268,7 @@ form .loginBtn:hover{
     justify-content: center;
     width: 100%;
     gap: 1rem;
+    
 }
 .savedImgCont{
     display: flex;
@@ -269,21 +276,172 @@ form .loginBtn:hover{
 }
 .col-md-3 .savedImg{
     margin: auto;
+    border: 5px solid #e9bc91;
+    border-radius: 10%;
+}
+.col-md-9{
+    position: relative;
 }
 .savedDetails{
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-wrap: wrap;
 }
 .savedDetails h4{
     text-align: center;
     font-weight: 600;
 }
 .savedDetails .savedInstruct{
-    width: 80%;
+    width: 90%;
     margin: auto;
     text-align: center;
+    
 }
 .savedInstruct a{
     width: 90%;
+    font-size: .8rem;
 }
+.savedForm{
+    display: inline-block;
+    padding: 5px;
+    position: absolute;
+    left: 175px;
+    bottom: 8px;
+}
+@media (min-width: 768px){
+    .savedCont{
+        width: 75%;
+    }
+    .savedImgCont{
+        width: 58%;
+        
+    }
+}
+@media (min-width: 1080px){
+    .savedCont{
+        width: 50%;
+    }
+    .savedCont h2{
+        font-size: 2.5rem;
+    }
+    .savedForm{
+        left: 240px;
+    }
+}
+
+/*Details*/
+.detailOuterCont{
+    width: 90%;
+    padding: 20px;
+    margin: auto;
+}
+.detailCont{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+   position: relative;
+   margin: auto;
+
+}
+.heart{
+    position: absolute;
+    right:1.4%;
+    top: .8%;
+    font-size: 1.8rem;
+    
+}
+.heartB{
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.heartB .heartDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 44px;
+    border-radius: 100px;
+    background-color: var(--orange);
+}
+.heartB i{
+    color:var(--white);
+    text-shadow: 1px 1px black;
+}
+.details{
+    margin: auto;
+    max-width: 90%;
+}
+.details .detailCtr{
+    text-align: center;
+    margin-bottom:7px;
+}
+.details h2{
+    text-shadow: 1px solid black;
+    font-weight: 600;
+    font-size: 5vw;
+}
+.details h4{
+    margin-top: 10px;
+    font-weight: 600;
+}
+.details .detailLink{
+    max-width: 90%;
+}
+.detailLinkText {
+    display: inline-block;
+    max-width: 100%; 
+    overflow: hidden;
+    white-space: nowrap;
+}
+.imgPic{
+    border: 5px solid #e9bc91;
+    padding: 0;
+}
+
+@media (min-width: 510px){
+    .detailOuterCont{
+        max-width: 80%;
+    }
+}
+@media (min-width: 685px){
+    .detailOuterCont{
+        max-width: 70%;
+    }
+}
+@media (min-width: 769px){
+    .detailOuterCont{
+        width: 80%;
+        border: 5px solid #e9bc91;
+        margin-top: 20px;
+
+    }
+    .detailCont{
+        flex-direction:row;
+        justify-content: center;
+        align-items: center;
+        padding-top: 25px;
+        width: auto;
+    }
+    .details{
+        padding: 15px;
+        max-height: 70%;
+        width: 60%;
+        text-align: center;
+    }
+    
+    .imgPic{
+        width: 40%;
+    }
+    .heart{
+        position: absolute;
+        right:0;
+        top: 0;
+        font-size: 1.8rem;
+        
+    }
+    
+}
+
+

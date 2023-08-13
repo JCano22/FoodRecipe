@@ -6,6 +6,7 @@ from saved_recipes.models import SavedRecipe
 import requests
 import random
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 # from .forms import EditAccountForm
 
 
@@ -74,7 +75,13 @@ def search_recipes(request):
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
         search_results = fetch_and_save_recipe(search_query)
-        return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query})
+
+        # Pagination
+        page_number = request.GET.get('page')
+        paginator = Paginator(search_results, 20)
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query, 'page_obj': page_obj})
     return render(request, 'home.html')
 
 
@@ -85,6 +92,7 @@ def recipe_detail(request, recipe_id):
     }
     return render(request, 'pages/detail.html', context)
 
+
 @login_required
 def account_info_view(request):
     user = request.user
@@ -93,14 +101,15 @@ def account_info_view(request):
     }
     return render(request, 'pages/account_info.html', context)
 
-#def edit_account(request):
+# def edit_account(request):
     user = request.user
 
     if request.method == 'POST':
         form = EditAccountForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('account_info')  # Redirect to the account info page after saving changes
+            # Redirect to the account info page after saving changes
+            return redirect('account_info')
     else:
         form = EditAccountForm(instance=user)
 

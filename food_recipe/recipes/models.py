@@ -10,7 +10,7 @@ class Recipe(models.Model):
     image_url = models.URLField()
     calories = models.IntegerField()
     cuisine = models.TextField()
-    
+    health = models.JSONField(default=list)
 
     def __str__(self):
         return self.title
