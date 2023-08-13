@@ -3,20 +3,26 @@
 {% block title %}{{ recipe.title }}{% endblock title %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="{{ recipe.image_url }}" alt="{{ recipe.title }} image" class="img-fluid">
-        </div>
-        <div class="col-md-6">
-            <h2>{{ recipe.title }}</h2>
-            <p>Calories: {{ recipe.calories }}</p>
-            <p>Cuisine: {{ recipe.cuisine }}</p>
+
+<div class="detailOuterCont">
+    
+    <div class="detailCont">
+        <form class="heart" action="POST">
+            <a class="heartB" href="{% url 'save_recipe' recipe.id %}">
+                <div class="heartDiv">
+                    <i class="fa fa-heart"></i>
+                </div>
+            </a>
+        </form>
+        <img src="{{ recipe.image_url }}" alt="{{ recipe.title }}" class="imgPic">
+        <div class="details">
+            <h2 class="detailCtr">{{ recipe.title }}</h2>
+            <p class="detailCtr">Calories: {{ recipe.calories }}</p>
+            <p class="detailCtr">Cuisine: {{ recipe.cuisine }}</p>
             <h4>Ingredients:</h4>
             <p>{{ recipe.ingredients|linebreaksbr }}</p>
             <h4>Instructions:</h4>
-            <p><a href="{{ recipe.instructions }}">{{ recipe.instructions }}</a></p>
-            
+            <p><a target="_blank" href="{{ recipe.instructions }}" class="detailLink"><span class="detailLinkText">{{ recipe.instructions }}</span></a></p>
         </div>
     </div>
 </div>

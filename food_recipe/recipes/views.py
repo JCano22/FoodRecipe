@@ -37,6 +37,7 @@ def fetch_and_save_recipe(search_query):
                     image_url=recipe['images']['REGULAR']['url'],
                     calories=recipe['calories'],
                     cuisine=recipe['cuisineType'],
+                    health=recipe['healthLabels'],
                 )
                 recipes_to_save.append(new_recipe)
             else:
@@ -47,6 +48,7 @@ def fetch_and_save_recipe(search_query):
                     image_url="./static/media/noImage.jpg",
                     calories=recipe['calories'],
                     cuisine=recipe['cuisineType'],
+                    health=recipe['healthLabels'],
                 )
                 recipes_to_save.append(new_recipe)
 
