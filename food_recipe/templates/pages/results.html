@@ -27,6 +27,15 @@
             </div>
         {% endfor %}
     </div>
+        {% if next_page %}
+            <form method="POST" action="{% url 'next_results' %}">
+                {% csrf_token %}
+                <input type="hidden" name="search_query" value="{{ search_query }}">
+                <input type="hidden" name="next_page_url" value="{{ next_page }}">
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        {% endif %}
+        
     {% else %}
         <h3>No Results Found.</h3>
     {% endif %}

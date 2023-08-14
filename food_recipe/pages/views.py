@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
-from recipes.views import fetch_and_save_recipe
+from recipes.views import fetch_and_save_recipe, fetch_and_save_next_page
 from recipes.models import Recipe
 from saved_recipes.models import SavedRecipe
 import requests
 import random
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-# from .forms import EditAccountForm
 
 
 class HomePageView(TemplateView):
@@ -63,26 +61,40 @@ class HomePageView(TemplateView):
 
 
 # view function to search api with keyword from user
-
 def search_recipes(request):
     if request.method == 'POST':
         search_query = request.POST.get('search_query', '')
         # Recipe.objects.all().delete()
+
+        # retrieves ids for savedrecipe objects
         saved_recipe_ids = SavedRecipe.objects.values_list(
             'recipe_id', flat=True)
-
         # Delete recipes that are not saved by any user
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
-        search_results = fetch_and_save_recipe(search_query)
+        search_results, next_page_url = fetch_and_save_recipe(search_query)
+        print("From the initial request", next_page_url)
 
-        # Pagination
-        page_number = request.GET.get('page')
-        paginator = Paginator(search_results, 20)
-        page_obj = paginator.get_page(page_number)
-
-        return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query, 'page_obj': page_obj})
+        return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query, 'next_page': next_page_url})
     return render(request, 'home.html')
+
+
+# view function to get recipes in next page of response body
+def search_next_recipes(request):
+    if request.method == 'POST':
+        next_page_url = request.POST.get('next_page_url')
+        search_query = request.POST.get('search_query')
+
+        if next_page_url:
+            next_page_results, next_page_url = fetch_and_save_next_page(
+                next_page_url)
+            print("Next Page Results:", next_page_results)
+            print("Next Page URL:", next_page_url)
+        else:
+            print("No Next page URL")
+
+        return render(request, 'pages/results.html', {'results': next_page_results, 'search_query': search_query, 'next_page': next_page_url})
+    return render(request, 'pages/results.html', {'results': None, 'search_query': '', 'next_page': None})
 
 
 def recipe_detail(request, recipe_id):
