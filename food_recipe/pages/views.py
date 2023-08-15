@@ -72,28 +72,46 @@ def search_recipes(request):
         # Delete recipes that are not saved by any user
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
-        search_results, next_page_url = fetch_and_save_recipe(search_query)
-        print("From the initial request", next_page_url)
+        search_results, next_page_url, current_page_url, previous_page_url = fetch_and_save_recipe(
+            search_query)
 
-        return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query, 'next_page': next_page_url})
+        context = {
+            'results': search_results,
+            'search_query': search_query,
+            'current_page': current_page_url,
+            'next_page': next_page_url,
+            'previous_page': previous_page_url
+        }
+
+        return render(request, 'pages/results.html', context)
+
     return render(request, 'home.html')
+
+# view function to get recipes from the previous page
+
+
+def search_previous_results(request):
+    if request.method == 'POST':
+        next_page_url = request.POST.get('next_page_ulr')
+        previous_page_url = request.POST.get('next_page_ulr')
+        # FINISH VIEW FUNCTION WITH PREVIOUS PAGE LOGIC
+        return None
 
 
 # view function to get recipes in next page of response body
 def search_next_recipes(request):
     if request.method == 'POST':
-        next_page_url = request.POST.get('next_page_url')
         search_query = request.POST.get('search_query')
+        next_page_url = request.POST.get('next_page_url')
+        pre_previous_page = request.POST.get('previous_page_url')
+        current_page_url = request.POST.get('current_page_url')
 
         if next_page_url:
-            next_page_results, next_page_url = fetch_and_save_next_page(
-                next_page_url)
-            print("Next Page Results:", next_page_results)
-            print("Next Page URL:", next_page_url)
-        else:
-            print("No Next page URL")
+            next_page_results, next_page, current_page, previous_page = fetch_and_save_next_page(
+                next_page_url, current_page_url)
 
-        return render(request, 'pages/results.html', {'results': next_page_results, 'search_query': search_query, 'next_page': next_page_url})
+        return render(request, 'pages/results.html', {'results': next_page_results, 'search_query': search_query, 'next_page': next_page, 'current_page': current_page, 'previous_page': previous_page})
+
     return render(request, 'pages/results.html', {'results': None, 'search_query': '', 'next_page': None})
 
 

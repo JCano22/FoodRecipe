@@ -17,6 +17,8 @@ def fetch_and_save_recipe(search_query):
         'app_id': app_id,
         'app_key': app_key,
     }
+    current_page = f"{api_endpoint}?{'&'.join(f'{key}={value}' for key, value in params.items())}"
+    previous_page = None
 
     try:
         response = requests.get(api_endpoint, params=params)
@@ -57,7 +59,7 @@ def fetch_and_save_recipe(search_query):
 
         next_page_url = recipe_data['_links'].get('next', {}).get('href', None)
 
-        return recipes_to_save, next_page_url
+        return recipes_to_save, next_page_url, current_page, previous_page
     except requests.exceptions.RequestException as e:
         # Handle any errors that occur during the API request
 
@@ -65,7 +67,11 @@ def fetch_and_save_recipe(search_query):
         return None
 
 
-def fetch_and_save_next_page(next_page_url):
+def fetch_and_save_next_page(next_page_url, current_page):
+
+    # re-assign current and previous pages
+    current_page_url = next_page_url
+    previous_page_url = current_page
     try:
         response = requests.get(next_page_url)
         response.raise_for_status()
@@ -105,7 +111,7 @@ def fetch_and_save_next_page(next_page_url):
         next_page = next_recipe_data['_links'].get(
             'next', {}).get('href', None)
 
-        return recipes_to_save, next_page
+        return recipes_to_save, next_page, current_page_url, previous_page_url
     except requests.exceptions.RequestException as e:
         # Handle any errors that occur during the API request
 

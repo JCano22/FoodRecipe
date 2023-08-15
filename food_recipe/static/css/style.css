@@ -208,6 +208,13 @@ nav{
     margin: 5px;
 
 }
+.pageCont{
+    width: 40%;
+    margin: auto;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 /*Login*/
 .container{
