@@ -26,38 +26,7 @@
             
             </div>
         {% endfor %}
-    </div>
-    <div class="pageCont">
-        {% if next_page %}
-            {% if previous_page %}
-                <form method="POST" action="{% url 'previous_results' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="search_query" value="{{ search_query }}">
-                    <input type="hidden" name="current_page_url" value="{{ current_page }}">
-                    <input type="hidden" name="next_page_url" value="{{ next_page }}">
-                    <input type="hidden" name="previous_page_url" value="{{ previous_page}}">
-                    <button type="submit" class="btn btn-primary">Previous</button>
-                </form>
-            {% else %}
-                <form method="POST" action="{% url 'previous_results' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="search_query" value="{{ search_query }}">
-                    <input type="hidden" name="current_page_url" value="{{ current_page }}">
-                    <input type="hidden" name="next_page_url" value="{{ next_page }}">
-                    <input type="hidden" name="previous_page_url" value="{{ previous_page}}">
-                    <button type="submit" class="btn btn-primary" disabled>Previous</button>
-                </form>
-            {% endif %}
-                <form method="POST" action="{% url 'next_results' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="search_query" value="{{ search_query }}">
-                    <input type="hidden" name="current_page_url" value="{{ current_page }}">
-                    <input type="hidden" name="next_page_url" value="{{ next_page }}">
-                    <input type="hidden" name="previous_page_url" value="{{ previous_page}}">
-                    <button type="submit" class="btn btn-primary">Next</button>
-                </form>
-        {% endif %}
-    </div>    
+    </div>  
     {% else %}
         <h3>No Results Found.</h3>
     {% endif %}
