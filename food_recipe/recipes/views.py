@@ -19,6 +19,7 @@ def fetch_and_save_recipe(search_query):
     }
     current_page = f"{api_endpoint}?{'&'.join(f'{key}={value}' for key, value in params.items())}"
     previous_page = None
+    pre_previous_page = None
 
     try:
         response = requests.get(api_endpoint, params=params)
@@ -59,59 +60,7 @@ def fetch_and_save_recipe(search_query):
 
         next_page_url = recipe_data['_links'].get('next', {}).get('href', None)
 
-        return recipes_to_save, next_page_url, current_page, previous_page
-    except requests.exceptions.RequestException as e:
-        # Handle any errors that occur during the API request
-
-        print(f"Error fetching recipes: {e}")
-        return None
-
-
-def fetch_and_save_next_page(next_page_url, current_page):
-
-    # re-assign current and previous pages
-    current_page_url = next_page_url
-    previous_page_url = current_page
-    try:
-        response = requests.get(next_page_url)
-        response.raise_for_status()
-        next_recipe_data = response.json()
-
-        recipes_to_save = []
-        for recipe_info in next_recipe_data['hits']:
-            recipe = recipe_info['recipe']
-            recipeImg = recipe['images']['REGULAR']['url']
-
-            if recipeImg:
-                new_recipe = Recipe(
-                    title=recipe['label'],
-                    ingredients='\n'.join(recipe['ingredientLines']),
-                    instructions=recipe['url'],
-                    image_url=recipe['images']['REGULAR']['url'],
-                    calories=recipe['calories'],
-                    cuisine=recipe['cuisineType'],
-                    health=recipe['healthLabels'],
-                )
-                recipes_to_save.append(new_recipe)
-            else:
-                new_recipe = Recipe(
-                    title=recipe['label'],
-                    ingredients='\n'.join(recipe['ingredientLines']),
-                    instructions=recipe['url'],
-                    image_url="./static/media/noImage.jpg",
-                    calories=recipe['calories'],
-                    cuisine=recipe['cuisineType'],
-                    health=recipe['healthLabels'],
-                )
-                recipes_to_save.append(new_recipe)
-
-        # adds recipes_to_save to db all at once
-        Recipe.objects.bulk_create(recipes_to_save)
-
-        next_page = next_recipe_data['_links'].get(
-            'next', {}).get('href', None)
-
-        return recipes_to_save, next_page, current_page_url, previous_page_url
+        return recipes_to_save, next_page_url, current_page, previous_page, pre_previous_page
     except requests.exceptions.RequestException as e:
         # Handle any errors that occur during the API request
 
