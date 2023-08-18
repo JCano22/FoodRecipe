@@ -6,6 +6,8 @@ from saved_recipes.models import SavedRecipe
 import requests
 import random
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
 
 
 class HomePageView(TemplateView):
@@ -72,16 +74,13 @@ def search_recipes(request):
         # Delete recipes that are not saved by any user
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
-        search_results, next_page_url, current_page_url, previous_page_url, pre_previous_page_url = fetch_and_save_recipe(
+        search_results, next_page_url = fetch_and_save_recipe(
             search_query)
 
         context = {
             'results': search_results,
             'search_query': search_query,
-            'current_page': current_page_url,
             'next_page': next_page_url,
-            'previous_page': previous_page_url,
-            'pre_previous_page': pre_previous_page_url
         }
 
         return render(request, 'pages/results.html', context)
