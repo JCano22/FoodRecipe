@@ -1,6 +1,11 @@
 from django.shortcuts import render
 from .models import Recipe
 import requests
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
+from django.views import View
+import json
 
 
 # Create your views here.
@@ -17,9 +22,6 @@ def fetch_and_save_recipe(search_query):
         'app_id': app_id,
         'app_key': app_key,
     }
-    current_page = f"{api_endpoint}?{'&'.join(f'{key}={value}' for key, value in params.items())}"
-    previous_page = None
-    pre_previous_page = None
 
     try:
         response = requests.get(api_endpoint, params=params)
@@ -59,10 +61,34 @@ def fetch_and_save_recipe(search_query):
         Recipe.objects.bulk_create(recipes_to_save)
 
         next_page_url = recipe_data['_links'].get('next', {}).get('href', None)
+        print("From fetch and save method:", next_page_url)
 
-        return recipes_to_save, next_page_url, current_page, previous_page, pre_previous_page
+        return recipes_to_save, next_page_url
     except requests.exceptions.RequestException as e:
         # Handle any errors that occur during the API request
 
         print(f"Error fetching recipes: {e}")
         return None
+
+
+@method_decorator(csrf_protect, name='dispatch')
+class SaveRecipeView(View):
+    def post(self, request):
+        recipe_data = request.body.decode('utf-8')
+        try:
+            recipe_json = json.loads(recipe_data)
+            new_recipe = Recipe(
+                title=recipe_json['title'],
+                ingredients=recipe_json['ingredients'],
+                instructions=recipe_json['instructions'],
+                image_url=recipe_json['image_url'],
+                calories=recipe_json['calories'],
+                cuisine=recipe_json['cuisine'],
+                health=recipe_json['health'],
+            )
+            new_recipe.save()
+            return JsonResponse({'message': 'Recipe saved successfully'})
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+        except KeyError as e:
+            return JsonResponse({'error': 'Missing key in JSON data'}, status=400)

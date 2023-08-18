@@ -6,7 +6,7 @@
 <body class="resultBody">
     <h3 style="margin: 2% 0 2% 10%;" class="resultTitle">Search Results For: <span style="font-weight: bold">{{ search_query }}</span> </h3>
     {% if results %}
-        <div class="resultCont">
+        <div class="resultCont" id="recipeContainer">
         {% for recipe in results %}
             <div class="card">
                 <a class="cardA" href="{% url 'details' recipe.id %}">
@@ -26,10 +26,78 @@
             
             </div>
         {% endfor %}
-    </div>  
+    </div>
+    <div class="loadMoreButton">
+        <button id="loadMoreBtn" class="btn btn-primary">Load More</button>
+    </div>
     {% else %}
         <h3>No Results Found.</h3>
     {% endif %}
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const loadMoreButton = document.getElementById('loadMoreBtn');
+        const recipeContainer = document.getElementById('recipeContainer');
+        
+        let nextUrl = "{{ next_page|safe }}";
+        console.log(nextUrl);
+        const csrfToken = "{{ csrf_token }}";
+
+        loadMoreButton.addEventListener('click', function () {
+            if (nextUrl) {
+                fetch(nextUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Response data:', data);
+                        const recipeInfoArray = data.hits;
+                        if (Array.isArray(recipeInfoArray) && recipeInfoArray.length > 0) {
+                            recipeInfoArray.forEach(recipeInfo => {
+                                const recipe = recipeInfo.recipe;
+                                const recipeCard = `
+                                    <div class="card">
+                                        <a class="cardA" href="/results/${recipe.uri}/">
+                                            <img src="${recipe.image}" class="card-img-top cardImage" alt="${recipe.label} image" style="height: 11rem;">
+                                        </a>
+                                        <form class="heartForm" action="POST">
+                                            <a class="heartA" href="/save_recipe/${recipe.uri}/">
+                                                <div class="iDiv">
+                                                    <i class="fa fa-heart"></i>
+                                                </div>
+                                            </a>
+                                        </form>
+                                        <div class="card-body">
+                                            <h5 class="card-title">${recipe.label}</h5>
+                                        </div>
+                                    </div>`;
+                                
+                                recipeContainer.insertAdjacentHTML('beforeend', recipeCard);
+                                
+                                // Save recipe to the database (AJAX request)
+                                const saveRecipeUrl = `/save_recipe/${encodeURIComponent(recipe.uri)}/`;
+                                fetch(saveRecipeUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRFToken': csrfToken,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(recipe),
+                                });
+                            });
+                            nextUrl = data._links.next ? data._links.next.href : null;
+                        } else {
+                            console.log('No recipes found in the response.'); 
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading more recipes:', error);
+                    });
+            } else {
+                loadMoreButton.disabled = true;
+            }
+        });
+    });
+</script>
+
 
 {% endblock content %}
