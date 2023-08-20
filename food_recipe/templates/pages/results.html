@@ -36,55 +36,59 @@
 </body>
 
 <script>
+    
     document.addEventListener('DOMContentLoaded', function () {
         const loadMoreButton = document.getElementById('loadMoreBtn');
         const recipeContainer = document.getElementById('recipeContainer');
         
         let nextUrl = "{{ next_page|safe }}";
-        console.log(nextUrl);
         const csrfToken = "{{ csrf_token }}";
 
-        loadMoreButton.addEventListener('click', function () {
+        loadMoreButton.addEventListener('click', async function () {
+            let recipeInfoArray;
+            /*STOP HERE*/
             if (nextUrl) {
                 fetch(nextUrl)
                     .then(response => response.json())
-                    .then(data => {
-                        console.log('Response data:', data);
-                        const recipeInfoArray = data.hits;
+                    .then(async data => {
+                        console.log(data);
+                        nextUrl = data._links.next ? data._links.next.href : null;
+                        recipeInfoArray = data.hits;
                         if (Array.isArray(recipeInfoArray) && recipeInfoArray.length > 0) {
-                            recipeInfoArray.forEach(recipeInfo => {
-                                const recipe = recipeInfo.recipe;
+
+                            const saveRecipeUrl = '/saveRecipes/save_next/';
+                            const saveResponse = await fetch(saveRecipeUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': csrfToken,
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(recipeInfoArray),
+                            }).then(response => response.json()).then(data => 
+                                data.forEach(recipeInfo => {
+                                
                                 const recipeCard = `
                                     <div class="card">
-                                        <a class="cardA" href="/results/${recipe.uri}/">
-                                            <img src="${recipe.image}" class="card-img-top cardImage" alt="${recipe.label} image" style="height: 11rem;">
+                                        <a class="cardA" href="/results/${recipeInfo.id}/">
+                                            <img src="${recipeInfo.image_url}" class="card-img-top cardImage" alt="${recipeInfo.title} image" style="height: 11rem;">
                                         </a>
                                         <form class="heartForm" action="POST">
-                                            <a class="heartA" href="/save_recipe/${recipe.uri}/">
+                                            <a class="heartA" href="/save_recipe/${recipeInfo.id}/">
                                                 <div class="iDiv">
                                                     <i class="fa fa-heart"></i>
                                                 </div>
                                             </a>
                                         </form>
                                         <div class="card-body">
-                                            <h5 class="card-title">${recipe.label}</h5>
+                                            <h5 class="card-title">${recipeInfo.title}</h5>
                                         </div>
                                     </div>`;
                                 
                                 recipeContainer.insertAdjacentHTML('beforeend', recipeCard);
-                                
-                                // Save recipe to the database (AJAX request)
-                                const saveRecipeUrl = `/save_recipe/${encodeURIComponent(recipe.uri)}/`;
-                                fetch(saveRecipeUrl, {
-                                    method: 'POST',
-                                    headers: {
-                                        'X-CSRFToken': csrfToken,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(recipe),
-                                });
-                            });
-                            nextUrl = data._links.next ? data._links.next.href : null;
+                            })
+                            );
+
+                            
                         } else {
                             console.log('No recipes found in the response.'); 
                         }

@@ -61,7 +61,6 @@ def fetch_and_save_recipe(search_query):
         Recipe.objects.bulk_create(recipes_to_save)
 
         next_page_url = recipe_data['_links'].get('next', {}).get('href', None)
-        print("From fetch and save method:", next_page_url)
 
         return recipes_to_save, next_page_url
     except requests.exceptions.RequestException as e:
@@ -72,23 +71,33 @@ def fetch_and_save_recipe(search_query):
 
 
 @method_decorator(csrf_protect, name='dispatch')
-class SaveRecipeView(View):
+class SaveNextView(View):
     def post(self, request):
-        recipe_data = request.body.decode('utf-8')
+        recipe_data = json.loads(request.body)
+        recipes_to_save = []
+
         try:
-            recipe_json = json.loads(recipe_data)
-            new_recipe = Recipe(
-                title=recipe_json['title'],
-                ingredients=recipe_json['ingredients'],
-                instructions=recipe_json['instructions'],
-                image_url=recipe_json['image_url'],
-                calories=recipe_json['calories'],
-                cuisine=recipe_json['cuisine'],
-                health=recipe_json['health'],
-            )
-            new_recipe.save()
-            return JsonResponse({'message': 'Recipe saved successfully'})
+            for recipe_info in recipe_data:
+                recipe_json = recipe_info['recipe']
+                new_recipe = Recipe(
+                    title=recipe_json['label'],
+                    ingredients='\n'.join(recipe_json['ingredientLines']),
+                    instructions=recipe_json['url'],
+                    image_url=recipe_json['images']['REGULAR']['url'],
+                    calories=recipe_json['calories'],
+                    cuisine=recipe_json['cuisineType'],
+                    health=recipe_json['healthLabels'],
+                )
+                recipes_to_save.append(new_recipe)
+
+            Recipe.objects.bulk_create(recipes_to_save)
+            saved_recipes_info = [{
+                'id': recipe.id, 'title': recipe.title,
+                'image_url': recipe.image_url} for recipe in recipes_to_save]
+            return JsonResponse(saved_recipes_info, safe=False)
         except json.JSONDecodeError as e:
+            print("JSON Decode Error:", e)
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
         except KeyError as e:
+            print("KeyError:", e)
             return JsonResponse({'error': 'Missing key in JSON data'}, status=400)

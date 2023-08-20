@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import SaveRecipeView
+from .views import SaveNextView
 
 urlpatterns = [
-    path('', SaveRecipeView.as_view, name='save_recipe'),
+    path('save_next/', SaveNextView.as_view(), name='save_next'),
 ]
