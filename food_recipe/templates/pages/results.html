@@ -4,8 +4,94 @@
 
 {% block content %}
 <body class="resultBody">
-    <h3 style="margin: 2% 0 2% 10%;" class="resultTitle">Search Results For: <span style="font-weight: bold">{{ search_query }}</span> </h3>
+    <h3 class="resultTitle">Search Results For: <span style="font-weight: bold">{{ search_query }}</span> </h3>
+
     {% if results %}
+        <!--Filter Results section-->
+        <div class="filter-section">
+            <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down"></i></h3>
+            <div class="filter-options">
+                <div class="healthOptions">
+                    <p class="healthLabelTitle">Dietary Preference:</p>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="dairy-free">
+                        Dairy-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="gluten-free">
+                        Gluten-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="egg-free">
+                        Egg-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="keto-friendly">
+                        Keto
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="kosher">
+                        Kosher
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="peanut-free">
+                        Peanut-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="keto-friendly">
+                        Keto
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="vegan">
+                        Vegan
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="vegetarian">
+                        Vegetarian
+                    </label>
+                </div>
+                <div class="cuisineOptions">
+                    <p class="cuisineTitle">Cuisine Type:</p>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="American">
+                        American
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="British">
+                        British
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Chinese">
+                        Chinese
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="French">
+                        French
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Indian">
+                        Indian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Italian">
+                        Italian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Japanese">
+                        Japanese
+                    </label><label>
+                        <input type="checkbox" name="cuisineType" value="Mediterranean">
+                        Mediterranean
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Mexican">
+                        Mexican
+                    </label>
+                
+                </div>
+            </div>
+        </div>
+    
         <div class="resultCont" id="recipeContainer">
         {% for recipe in results %}
             <div class="card">
@@ -51,7 +137,6 @@
                 fetch(nextUrl)
                     .then(response => response.json())
                     .then(async data => {
-                        console.log(data);
                         nextUrl = data._links.next ? data._links.next.href : null;
                         recipeInfoArray = data.hits;
                         if (Array.isArray(recipeInfoArray) && recipeInfoArray.length > 0) {
@@ -73,7 +158,7 @@
                                             <img src="${recipeInfo.image_url}" class="card-img-top cardImage" alt="${recipeInfo.title} image" style="height: 11rem;">
                                         </a>
                                         <form class="heartForm" action="POST">
-                                            <a class="heartA" href="/save_recipe/${recipeInfo.id}/">
+                                            <a class="heartA" href="/saved_recipes/save/${recipeInfo.id}/">
                                                 <div class="iDiv">
                                                     <i class="fa fa-heart"></i>
                                                 </div>
