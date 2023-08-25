@@ -64,8 +64,6 @@ nav{
         width: 90% !important;
         text-align: center;
         height: 100%;
-        
-
     }
     .homeCont .pageTitle{
         font-size: 4rem;
@@ -141,7 +139,20 @@ nav{
 }
 
 /*Results*/
+.resultTitle{
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    padding: 10px;
+    margin: 5px;
+}
+.filter-section{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 15px;
+}
 
+   
 .resultCont{
     width: 80%;
     margin: auto;
@@ -207,6 +218,23 @@ nav{
 .card .cardTitle{
     margin: 5px;
 
+}
+.loadMoreButton{
+    width: 15%;
+    margin: 20px auto;
+
+}
+.loadMoreButton button{
+    width: 100%;
+    margin: auto;
+}
+.loadMoreButton .btn{
+    background-color:var(--orange);
+    color:var(--white);
+}
+.loadMoreButton .btn:hover{
+    background-color: #e4792d;
+    color: black;
 }
 .pageCont{
     width: 40%;
