@@ -9,10 +9,12 @@
     {% if results %}
         <!--Filter Results section-->
         <div class="filter-section">
-            <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down"></i></h3>
-            <div class="filter-options">
+            <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down" id="filterArrow"></i></h3>
+            <div class="filter-options hidden" id="filterOpts">
                 <div class="healthOptions">
                     <p class="healthLabelTitle">Dietary Preference:</p>
+
+                    <div class="filterOptCont">
                     <label>
                         <input type="checkbox" name="healthLabel" value="dairy-free">
                         Dairy-Free
@@ -50,43 +52,46 @@
                         Vegetarian
                     </label>
                 </div>
+                </div>
                 <div class="cuisineOptions">
                     <p class="cuisineTitle">Cuisine Type:</p>
+                    <div class="filterOptCont">
                     <label>
-                        <input type="checkbox" name="cuisineType" value="American">
+                        <input type="radio" name="cuisineType" value="American">
                         American
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="British">
+                        <input type="radio" name="cuisineType" value="British">
                         British
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Chinese">
+                        <input type="radio" name="cuisineType" value="Chinese">
                         Chinese
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="French">
+                        <input type="radio" name="cuisineType" value="French">
                         French
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Indian">
+                        <input type="radio" name="cuisineType" value="Indian">
                         Indian
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Italian">
+                        <input type="radio" name="cuisineType" value="Italian">
                         Italian
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Japanese">
+                        <input type="radio" name="cuisineType" value="Japanese">
                         Japanese
                     </label><label>
-                        <input type="checkbox" name="cuisineType" value="Mediterranean">
+                        <input type="radio" name="cuisineType" value="Mediterranean">
                         Mediterranean
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Mexican">
+                        <input type="radio" name="cuisineType" value="Mexican">
                         Mexican
                     </label>
+                </div>
                 
                 </div>
             </div>
@@ -122,7 +127,24 @@
 </body>
 
 <script>
-    
+    //Section to toggle filter options when arrow is clicked
+    let filterSection = document.getElementById('filterArrow');
+    let filterOptions = document.getElementById('filterOpts');
+    let isActive = false;
+
+    filterSection.addEventListener('click', function(){
+        if(!isActive){
+            filterOptions.classList.remove('hidden');
+            isActive = true;
+        }
+        else{
+            filterOptions.classList.add('hidden');
+            isActive = false;
+        }
+        
+    })
+
+    //Section to make api call to get next page.
     document.addEventListener('DOMContentLoaded', function () {
         const loadMoreButton = document.getElementById('loadMoreBtn');
         const recipeContainer = document.getElementById('recipeContainer');
