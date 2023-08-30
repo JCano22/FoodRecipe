@@ -5,8 +5,9 @@ from recipes.models import Recipe
 from saved_recipes.models import SavedRecipe
 import requests
 import random
-
-# from .forms import EditAccountForm
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+import json
 
 
 class HomePageView(TemplateView):
@@ -62,19 +63,28 @@ class HomePageView(TemplateView):
 
 
 # view function to search api with keyword from user
-
 def search_recipes(request):
     if request.method == 'POST':
         search_query = request.POST.get('search_query', '')
         # Recipe.objects.all().delete()
+
+        # retrieves ids for savedrecipe objects
         saved_recipe_ids = SavedRecipe.objects.values_list(
             'recipe_id', flat=True)
-
         # Delete recipes that are not saved by any user
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
-        search_results = fetch_and_save_recipe(search_query)
-        return render(request, 'pages/results.html', {'results': search_results, 'search_query': search_query})
+        search_results, next_page_url = fetch_and_save_recipe(
+            search_query)
+
+        context = {
+            'results': search_results,
+            'search_query': search_query,
+            'next_page': next_page_url,
+        }
+
+        return render(request, 'pages/results.html', context)
+
     return render(request, 'home.html')
 
 

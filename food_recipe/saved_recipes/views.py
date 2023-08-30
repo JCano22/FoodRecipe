@@ -34,6 +34,7 @@ class SavedRecipeListView(LoginRequiredMixin, ListView):
 class SaveRecipeView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         recipe_id = kwargs['recipe_id']
+        print("from saveRecipeView: ", recipe_id)
         try:
             recipe = Recipe.objects.get(id=recipe_id)
 
@@ -48,7 +49,7 @@ class SaveRecipeView(LoginRequiredMixin, View):
 
 
 class DeleteRecipeView(LoginRequiredMixin, DeleteView):
-    
+
     model = SavedRecipe
 
     template_name = "pages/delete_confirmation.html"

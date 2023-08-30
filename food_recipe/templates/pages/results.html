@@ -4,9 +4,95 @@
 
 {% block content %}
 <body class="resultBody">
-    <h3 style="margin: 2% 0 2% 10%;" class="resultTitle">Search Results For: <span style="font-weight: bold">{{ search_query }}</span> </h3>
+    <h3 class="resultTitle">Search Results For: <span style="font-weight: bold">{{ search_query }}</span> </h3>
+
     {% if results %}
-        <div class="resultCont">
+        <!--Filter Results section-->
+        <div class="filter-section">
+            <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down"></i></h3>
+            <div class="filter-options">
+                <div class="healthOptions">
+                    <p class="healthLabelTitle">Dietary Preference:</p>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="dairy-free">
+                        Dairy-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="gluten-free">
+                        Gluten-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="egg-free">
+                        Egg-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="keto-friendly">
+                        Keto
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="kosher">
+                        Kosher
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="peanut-free">
+                        Peanut-Free
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="keto-friendly">
+                        Keto
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="vegan">
+                        Vegan
+                    </label>
+                    <label>
+                        <input type="checkbox" name="healthLabel" value="vegetarian">
+                        Vegetarian
+                    </label>
+                </div>
+                <div class="cuisineOptions">
+                    <p class="cuisineTitle">Cuisine Type:</p>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="American">
+                        American
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="British">
+                        British
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Chinese">
+                        Chinese
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="French">
+                        French
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Indian">
+                        Indian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Italian">
+                        Italian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Japanese">
+                        Japanese
+                    </label><label>
+                        <input type="checkbox" name="cuisineType" value="Mediterranean">
+                        Mediterranean
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Mexican">
+                        Mexican
+                    </label>
+                
+                </div>
+            </div>
+        </div>
+    
+        <div class="resultCont" id="recipeContainer">
         {% for recipe in results %}
             <div class="card">
                 <a class="cardA" href="{% url 'details' recipe.id %}">
@@ -27,9 +113,80 @@
             </div>
         {% endfor %}
     </div>
+    <div class="loadMoreButton">
+        <button id="loadMoreBtn" class="btn btn-primary">Load More</button>
+    </div>
     {% else %}
         <h3>No Results Found.</h3>
     {% endif %}
 </body>
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        const loadMoreButton = document.getElementById('loadMoreBtn');
+        const recipeContainer = document.getElementById('recipeContainer');
+        
+        let nextUrl = "{{ next_page|safe }}";
+        const csrfToken = "{{ csrf_token }}";
+
+        loadMoreButton.addEventListener('click', async function () {
+            let recipeInfoArray;
+            /*STOP HERE*/
+            if (nextUrl) {
+                fetch(nextUrl)
+                    .then(response => response.json())
+                    .then(async data => {
+                        nextUrl = data._links.next ? data._links.next.href : null;
+                        recipeInfoArray = data.hits;
+                        if (Array.isArray(recipeInfoArray) && recipeInfoArray.length > 0) {
+
+                            const saveRecipeUrl = '/saveRecipes/save_next/';
+                            const saveResponse = await fetch(saveRecipeUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': csrfToken,
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(recipeInfoArray),
+                            }).then(response => response.json()).then(data => 
+                                data.forEach(recipeInfo => {
+                                
+                                const recipeCard = `
+                                    <div class="card">
+                                        <a class="cardA" href="/results/${recipeInfo.id}/">
+                                            <img src="${recipeInfo.image_url}" class="card-img-top cardImage" alt="${recipeInfo.title} image" style="height: 11rem;">
+                                        </a>
+                                        <form class="heartForm" action="POST">
+                                            <a class="heartA" href="/saved_recipes/save/${recipeInfo.id}/">
+                                                <div class="iDiv">
+                                                    <i class="fa fa-heart"></i>
+                                                </div>
+                                            </a>
+                                        </form>
+                                        <div class="card-body">
+                                            <h5 class="card-title">${recipeInfo.title}</h5>
+                                        </div>
+                                    </div>`;
+                                
+                                recipeContainer.insertAdjacentHTML('beforeend', recipeCard);
+                            })
+                            );
+
+                            
+                        } else {
+                            console.log('No recipes found in the response.'); 
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading more recipes:', error);
+                    });
+            } else {
+                loadMoreButton.disabled = true;
+            }
+        });
+    });
+</script>
+
 
 {% endblock content %}

@@ -6,7 +6,7 @@
 <div class="container savedCont mt-5">
     <h2>Your Saved Recipes</h2>
     {% if saved_recipes %}
-        <p>Total saved recipes: {{ saved_recipes|length }}</p>
+        <p>Total saved recipes: <span style="font-weight: bold;">{{ saved_recipes|length }}</span></p>
         <div class="savedCard">
             <ul class="list-group mt-3">
                 {% for saved_recipe in saved_recipes %}
@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                                     <br><br>
-                                <form method="post" action="{% url 'delete' saved_recipe.pk %}">
+                                <form method="post" action="{% url 'delete' saved_recipe.pk %}" class="savedForm">
                                     {% csrf_token %}
                                     <button type="submit">Delete</button>
                                 </form>
