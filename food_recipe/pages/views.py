@@ -94,26 +94,3 @@ def recipe_detail(request, recipe_id):
         'recipe': recipe
     }
     return render(request, 'pages/detail.html', context)
-
-
-@login_required
-def account_info_view(request):
-    user = request.user
-    context = {
-        'user': user,
-    }
-    return render(request, 'pages/account_info.html', context)
-
-# def edit_account(request):
-    user = request.user
-
-    if request.method == 'POST':
-        form = EditAccountForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            # Redirect to the account info page after saving changes
-            return redirect('account_info')
-    else:
-        form = EditAccountForm(instance=user)
-
-    return render(request, 'pages/edit_account.html', {'form': form})

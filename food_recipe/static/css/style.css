@@ -150,6 +150,7 @@ nav{
     padding: 10px;
     margin: 5px 15px;
 }
+
 .filter-options{
     background-color: beige;
     padding: 5px;
@@ -174,6 +175,7 @@ nav{
     font-size: .8rem;
     font-style: italic;
 }
+
    
 .resultCont{
     width: 80%;
