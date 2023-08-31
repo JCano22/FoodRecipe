@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Account info{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2>Account Information of: {{ user.first_name }}</h2>
+    <div class="row mt-4">
+      <div class="col-sm-8">
+        <h4><b>Name:</b> {{ user.first_name }} {{ user.last_name }} </h4>
+        <h4><b>Email:</b> {{ user.email }}</h4>
+        <h4><b>Member Since:</b>{{ user.date_joined }}</h4>
+        <h4><b>Last Login:</b> {{ user.last_login }}</h4>
+        <h4><b>Number of Recipes Saved:</b> {{ saved_recipes_count }}</h4>
+      </div>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-success" href="{% url 'edit_account' %}">Edit Account</a>
+      </div>
+</div>
+      
+
+{% endblock content %}
