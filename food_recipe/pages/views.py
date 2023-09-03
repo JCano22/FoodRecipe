@@ -67,7 +67,6 @@ def search_recipes(request):
     if request.method == 'POST':
 
         search_query = request.POST.get('search_query', '')
-        print(search_query)
         # Recipe.objects.all().delete()
 
         # retrieves ids for savedrecipe objects
