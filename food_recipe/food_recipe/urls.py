@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from django.contrib.auth import urls
 
@@ -26,4 +28,4 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('saved_recipes/', include('saved_recipes.urls')),
     path('saveRecipes/', include('recipes.urls')),
-]
+] + static(settings.STATIC_URL)
