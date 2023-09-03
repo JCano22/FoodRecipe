@@ -29,6 +29,7 @@ CSRF_COOKIE_SECURE=env.bool("COOKIE_SECURE", True)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
+#DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".herokuapp.com", ".azurewebsites.net", "fsdi-foodrecipe.azurewebsites.net"]
 
