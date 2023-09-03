@@ -29,7 +29,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".herokuapp.com", ".azurewebsites.net", "fsdi-foodrecipe.azurewebsites.net"]
 
 
 # Application definition
@@ -47,11 +47,11 @@ INSTALLED_APPS = [
     'accounts',
     'pages',
     'saved_recipes',
-
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
