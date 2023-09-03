@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
-from recipes.views import fetch_and_save_recipe
+from recipes.views import fetch_and_save_recipe, fetch_and_save_filter
 from recipes.models import Recipe
 from saved_recipes.models import SavedRecipe
 import requests
@@ -65,7 +65,9 @@ class HomePageView(TemplateView):
 # view function to search api with keyword from user
 def search_recipes(request):
     if request.method == 'POST':
+
         search_query = request.POST.get('search_query', '')
+        print(search_query)
         # Recipe.objects.all().delete()
 
         # retrieves ids for savedrecipe objects
@@ -86,6 +88,24 @@ def search_recipes(request):
         return render(request, 'pages/results.html', context)
 
     return render(request, 'home.html')
+
+
+def search_filter(request):
+    if request.method == 'POST':
+        health_labels = request.POST.getlist('healthLabel', '')
+        cuisine = request.POST.get('cuisineType', '')
+        search_query = request.POST.get('searchQ', '')
+
+        filterResults, next_page_url = fetch_and_save_filter(
+            search_query, health_labels, cuisine, )
+
+        context = {
+            'results': filterResults,
+            'search_query': search_query,
+            'next_page': next_page_url
+        }
+
+        return render(request, 'pages/results.html', context)
 
 
 def recipe_detail(request, recipe_id):

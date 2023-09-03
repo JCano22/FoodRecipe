@@ -137,13 +137,14 @@ STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "home"
-#LOGOUT_REDIRECT_URL = "home"
+# LOGOUT_REDIRECT_URL = "home"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 EMAIL_BACKEND = (
-    "django.core.mail.backends.%s.EmailBackend" % env.str("EMAIL_BACKEND", default="smtp")
+    "django.core.mail.backends.%s.EmailBackend" % env.str(
+        "EMAIL_BACKEND", default="smtp")
 )
 
 EMAIL_PORT = 587

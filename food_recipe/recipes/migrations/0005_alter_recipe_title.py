@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recipe',
             name='title',
-            field=models.CharField(max_length=200, unique=True),
+            field=models.CharField(max_length=200, unique=False),
         ),
     ]
