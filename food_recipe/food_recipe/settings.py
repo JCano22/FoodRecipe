@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str("SECRET_KEY")
-CSRF_COOKIE_SECURE=env.str("COOKIE_SECURE")
+CSRF_COOKIE_SECURE=env.bool("COOKIE_SECURE", True)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
