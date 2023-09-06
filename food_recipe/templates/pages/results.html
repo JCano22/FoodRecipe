@@ -9,7 +9,6 @@
     {% if results %}
         <!--Filter Results section-->
         <div class="filter-section">
-            <div class="filter-titles">
             <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down" id="filterArrow"></i></h3>
             <form action="{% url 'results' %}" method="POST">
                 {% csrf_token %}
@@ -29,6 +28,11 @@
                     <p class="healthLabelTitle">Dietary Preference:</p>
 
                     <div class="filterOptCont">
+
+            <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down"></i></h3>
+            <div class="filter-options">
+                <div class="healthOptions">
+                    <p class="healthLabelTitle">Dietary Preference:</p>
 
                     <label>
                         <input type="checkbox" name="healthLabel" value="dairy-free">
@@ -68,7 +72,7 @@
                     </label>
                 </div>
 
-                
+                </div>
                 <div class="cuisineOptions">
                     <p class="cuisineTitle">Cuisine Type:</p>
                     <div class="filterOptCont">
@@ -108,6 +112,46 @@
                         Mexican
                     </label>
                 </div>
+=======
+                <div class="cuisineOptions">
+                    <p class="cuisineTitle">Cuisine Type:</p>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="American">
+                        American
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="British">
+                        British
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Chinese">
+                        Chinese
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="French">
+                        French
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Indian">
+                        Indian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Italian">
+                        Italian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Japanese">
+                        Japanese
+                    </label><label>
+                        <input type="checkbox" name="cuisineType" value="Mediterranean">
+                        Mediterranean
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cuisineType" value="Mexican">
+                        Mexican
+                    </label>
+
+                
                 </div>
                 <input type="hidden" name="searchQ" value="{{ search_query }}">
                 <input type="submit" class="btn" value="Apply">
