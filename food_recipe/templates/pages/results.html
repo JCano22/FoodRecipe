@@ -9,19 +9,22 @@
     {% if results %}
         <!--Filter Results section-->
         <div class="filter-section">
-            <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down" id="filterArrow"></i></h3>
-            <form action="{% url 'results' %}" method="POST">
-                {% csrf_token %}
-            <div class="wrap">
-                <div class="search">
-                   <input type="text" class="searchTerm" placeholder="Enter New Search" name="search_query">
-                   <button type="submit" class="searchButton">
-                     <i class="fa fa-search"></i>
-                  </button>
-                </div>
-             </div>
-            </form>
-             </div>
+            <div class="filterHead">
+                <h3 class="filter-heading">Filter Recipes By: <i class="fa fa-caret-down" id="filterArrow"></i></h3>
+                <form action="{% url 'results' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="wrap">
+                        <div class="search">
+                        <input type="text" class="searchTerm" placeholder="Enter New Search" name="search_query">
+                        <button type="submit" class="searchButton">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+             
 
             <div class="filter-options hidden" id="filterOpts">
                 <div class="healthOptions">
@@ -114,9 +117,6 @@
             </form>
             </div>
         </div>
-        </div>
-    </div>
-    </div>
     
         <div class="resultCont" id="recipeContainer">
         {% for recipe in results %}

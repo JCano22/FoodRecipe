@@ -156,8 +156,18 @@ nav{
 }
 @media(min-width: 840px){
     .filter-section{
-        width: 75%;
+        width: 70%;
         margin: auto;
+    }
+    .filter-options{
+        width: 70%;
+        margin: auto;
+    }
+    .filterHead{
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
     }
 }
 .filter-titles{
