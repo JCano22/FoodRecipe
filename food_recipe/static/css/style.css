@@ -213,6 +213,7 @@ body{
     margin: auto;
 
 }
+
 .hidden{
     display: none;
 }
@@ -220,11 +221,11 @@ body{
     margin-bottom: 0;
     font-weight: 500;
 }
-.healthOptions{
+.healthOptions, .cuisineOptions{
     margin: 5px;
 }
 
-.filterOptCont{
+.filterOptCont, .cuisineOptions label{
     font-size: .8rem;
     font-style: italic;
 }
