@@ -98,6 +98,9 @@ def search_filter(request):
         filterResults, next_page_url = fetch_and_save_filter(
             search_query, health_labels, cuisine, )
 
+        if next_page_url is None:
+            next_page_url = ''
+
         context = {
             'results': filterResults,
             'search_query': search_query,
