@@ -60,9 +60,13 @@ def fetch_and_save_recipe(search_query):
         # adds recipes_to_save to db all at once
         Recipe.objects.bulk_create(recipes_to_save)
 
+        # call the db again to retrieve the product (with id)
+        titles = [r.title for r in recipes_to_save]
+        results = Recipe.objects.filter(title__in=titles)
+
         next_page_url = recipe_data['_links'].get('next', {}).get('href', None)
 
-        return recipes_to_save, next_page_url
+        return results, next_page_url
     except requests.exceptions.RequestException as e:
         # Handle any errors that occur during the API request
 

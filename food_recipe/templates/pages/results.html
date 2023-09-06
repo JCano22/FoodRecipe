@@ -27,9 +27,9 @@
             <div class="filter-options hidden" id="filterOpts">
                 <div class="healthOptions">
                     <p class="healthLabelTitle">Dietary Preference:</p>
-        <form action="{% url 'filter' %}" method="POST">
-            {% csrf_token %}
-            <div class="filterOptCont">
+
+                    <div class="filterOptCont">
+
                     <label>
                         <input type="checkbox" name="healthLabel" value="dairy-free">
                         Dairy-Free

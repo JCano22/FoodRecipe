@@ -72,6 +72,7 @@ def search_recipes(request):
         # retrieves ids for savedrecipe objects
         saved_recipe_ids = SavedRecipe.objects.values_list(
             'recipe_id', flat=True)
+        
         # Delete recipes that are not saved by any user
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
