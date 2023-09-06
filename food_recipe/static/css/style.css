@@ -12,6 +12,10 @@
 body{
     background-color: var(--white); 
 }
+.btn{
+    background-color: var(--orange);
+    color: var(--white);
+}
 
 /*Navbar*/
 nav{
@@ -148,8 +152,59 @@ nav{
 .filter-section{
     width: 100%;
     padding: 10px;
-    margin: 5px 15px;
+    margin: 5px auto;
 }
+@media(min-width: 840px){
+    .filter-section{
+        width: 75%;
+        margin: auto;
+    }
+}
+.filter-titles{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+/*Css for search bar in results page*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+  background: #f2f2f2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #e4792d;
+  padding: 5px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: black;
+}
+
+.searchTerm:focus{
+  color: black;
+}
+
+.searchButton {
+  width: 40px;
+  height: 42px;
+  border: 1px solid #e4792d;
+  background: #e4792d;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 
 .filter-options{
     background-color: beige;
@@ -158,6 +213,7 @@ nav{
     margin: auto;
 
 }
+
 .hidden{
     display: none;
 }
@@ -165,13 +221,11 @@ nav{
     margin-bottom: 0;
     font-weight: 500;
 }
-.healthOptions{
+.healthOptions, .cuisineOptions{
     margin: 5px;
 }
-.cuisineOptions{
-    margin: 5px;
-}
-.filterOptCont{
+
+.filterOptCont, .cuisineOptions label{
     font-size: .8rem;
     font-style: italic;
 }
