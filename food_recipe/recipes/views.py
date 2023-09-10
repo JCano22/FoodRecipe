@@ -143,6 +143,7 @@ def fetch_and_save_filter(search_query, health, cuisine):
             'q': search_query,
             'app_id': app_id,
             'app_key': app_key,
+            'cuisineType': cuisine,
         }
 
     try:
