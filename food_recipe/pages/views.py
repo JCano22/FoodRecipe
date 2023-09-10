@@ -72,7 +72,7 @@ def search_recipes(request):
         # retrieves ids for savedrecipe objects
         saved_recipe_ids = SavedRecipe.objects.values_list(
             'recipe_id', flat=True)
-        
+
         # Delete recipes that are not saved by any user
         Recipe.objects.exclude(id__in=saved_recipe_ids).delete()
 
@@ -97,7 +97,7 @@ def search_filter(request):
         search_query = request.POST.get('searchQ', '')
 
         filterResults, next_page_url = fetch_and_save_filter(
-            search_query, health_labels, cuisine, )
+            search_query, health_labels, cuisine)
 
         if next_page_url is None:
             next_page_url = ''

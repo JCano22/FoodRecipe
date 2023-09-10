@@ -27,6 +27,8 @@
              
 
             <div class="filter-options hidden" id="filterOpts">
+                <form action="{% url 'filter' %}" method="POST">
+                    {% csrf_token %}
                 <div class="healthOptions">
                     <p class="healthLabelTitle">Dietary Preference:</p>
 
@@ -75,43 +77,44 @@
                 <div class="cuisineOptions">
                     <p class="cuisineTitle">Cuisine Type:</p>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="American">
+                        <input type="radio" name="cuisineType" value="American">
                         American
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="British">
+                        <input type="radio" name="cuisineType" value="British">
                         British
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Chinese">
+                        <input type="radio" name="cuisineType" value="Chinese">
                         Chinese
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="French">
+                        <input type="radio" name="cuisineType" value="French">
                         French
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Indian">
+                        <input type="radio" name="cuisineType" value="Indian">
                         Indian
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Italian">
+                        <input type="radio" name="cuisineType" value="Italian">
                         Italian
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Japanese">
+                        <input type="radio" name="cuisineType" value="Japanese">
                         Japanese
                     </label><label>
-                        <input type="checkbox" name="cuisineType" value="Mediterranean">
+                        <input type="radio" name="cuisineType" value="Mediterranean">
                         Mediterranean
                     </label>
                     <label>
-                        <input type="checkbox" name="cuisineType" value="Mexican">
+                        <input type="radio" name="cuisineType" value="Mexican">
                         Mexican
                     </label>
 
                 
                 </div>
+            
                 <input type="hidden" name="searchQ" value="{{ search_query }}">
                 <input type="submit" class="btn" value="Apply">
             </form>
